@@ -35,19 +35,58 @@
             margin-bottom: 50px;
         }
         
-        .logo {
+        /* 优化后的标题样式 */
+        .logo-button {
             display: flex;
             align-items: center;
+            padding: 12px 20px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, rgba(40, 46, 61, 0.8) 0%, rgba(28, 27, 37, 0.8) 100%);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(126, 87, 194, 0.3);
         }
         
-        .logo-icon {
-            font-size: 32px;
-            color: #7e57c2;
-            margin-right: 10px;
+        .logo-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(126, 87, 194, 0.1) 0%, transparent 70%);
+            transform: rotate(30deg);
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+        
+        .logo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            border-color: rgba(126, 87, 194, 0.5);
+        }
+        
+        .logo-button:hover::before {
+            opacity: 1;
+        }
+        
+        .logo-img {
+            width: 32px;
+            height: 32px;
+            margin-right: 12px;
+            border-radius: 8px;
+            object-fit: cover;
+            background-image: url('TP.png');
+            background-size: cover;
+            background-position: center;
+            border: 1px solid rgba(126, 87, 194, 0.3);
         }
         
         .logo-text {
-            font-size: 28px;
+            font-size: 22px;
             font-weight: 800;
             background: linear-gradient(90deg, #7e57c2, #2196f3);
             -webkit-background-clip: text;
@@ -235,6 +274,20 @@
         
         /* 响应式设计 */
         @media (max-width: 768px) {
+            .logo-button {
+                padding: 8px 15px;
+            }
+            
+            .logo-img {
+                width: 28px;
+                height: 28px;
+                margin-right: 8px;
+            }
+            
+            .logo-text {
+                font-size: 18px;
+            }
+            
             .hero-title {
                 font-size: 36px;
             }
@@ -261,8 +314,8 @@
 <body>
     <div class="container">
         <header>
-            <div class="logo">
-                <div class="logo-icon"><i class="fas fa-globe"></i></div>
+            <div class="logo-button" onclick="window.location.reload()">
+                <div class="logo-img"></div>
                 <div class="logo-text">LY官网</div>
             </div>
         </header>
@@ -273,12 +326,12 @@
         </section>
         
         <div class="buttons-grid">
-            <div class="button-card" onclick="showModal('officialCloud')">
+            <div class="button-card" onclick="showModal('joinUs')">
                 <div class="button-icon">
-                    <i class="fas fa-cloud"></i>
+                    <i class="fas fa-user-plus"></i>
                 </div>
-                <h3 class="button-title">官方网盘</h3>
-                <p class="button-description">安全可靠的云存储服务，随时随地访问您的文件</p>
+                <h3 class="button-title">加入我们</h3>
+                <p class="button-description">成为LY团队的一员，共同创造精彩</p>
             </div>
             
             <div class="button-card" onclick="showModal('aboutUs')">
@@ -313,14 +366,14 @@
     </div>
 
     <!-- 模态框 -->
-    <div id="officialCloudModal" class="modal">
+    <div id="joinUsModal" class="modal">
         <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('officialCloud')">×</button>
-            <h2 class="modal-title">官方网盘</h2>
-            <p class="modal-text">官方网盘功能正在开发中，即将为您提供安全可靠的云存储服务。</p>
+            <button class="modal-close" onclick="closeModal('joinUs')">×</button>
+            <h2 class="modal-title">加入我们</h2>
+            <p class="modal-text">您确定要加入LY团队吗？</p>
             <div class="modal-actions">
-                <button class="modal-btn modal-btn-primary" onclick="closeModal('officialCloud')">确定</button>
-                <button class="modal-btn modal-btn-secondary" onclick="closeModal('officialCloud')">稍后提醒</button>
+                <button class="modal-btn modal-btn-primary" onclick="joinTeam()">是</button>
+                <button class="modal-btn modal-btn-secondary" onclick="closeModal('joinUs')">否</button>
             </div>
         </div>
     </div>
@@ -329,9 +382,9 @@
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal('aboutUs')">×</button>
             <h2 class="modal-title">关于我们</h2>
-            <p class="modal-text">LY团队致力于为用户提供优质的科技服务，不断创新，追求卓越。</p>
+            <p class="modal-text">此网站由LY主导开发，小凌、greenning、冰岛赞助开发</p>
             <div class="modal-actions">
-                <button class="modal-btn modal-btn-primary" onclick="closeModal('aboutUs')">了解详情</button>
+                <button class="modal-btn modal-btn-primary" onclick="closeModal('aboutUs')">确定</button>
             </div>
         </div>
     </div>
@@ -340,10 +393,9 @@
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal('sponsor')">×</button>
             <h2 class="modal-title">赞助我们</h2>
-            <p class="modal-text">感谢您对LY官网的支持，您的赞助将帮助我们提供更好的服务。</p>
+            <p class="modal-text">请添加作者微信哦 LY-QF-QQ</p>
             <div class="modal-actions">
-                <button class="modal-btn modal-btn-primary" onclick="closeModal('sponsor')">赞助</button>
-                <button class="modal-btn modal-btn-secondary" onclick="closeModal('sponsor')">取消</button>
+                <button class="modal-btn modal-btn-primary" onclick="closeModal('sponsor')">确定</button>
             </div>
         </div>
     </div>
@@ -374,6 +426,12 @@
             if (modal) {
                 modal.style.display = 'none';
             }
+        }
+        
+        // 加入团队功能
+        function joinTeam() {
+            window.open('https://t.me/LYwdnb66', '_blank');
+            closeModal('joinUs');
         }
         
         // 点击模态框外部关闭
