@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LY官网</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f1621 0%, #1c2331 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(94, 53, 177, 0.5);
+            margin-bottom: 50px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            font-size: 32px;
+            color: #7e57c2;
+            margin-right: 10px;
+        }
+        
+        .logo-text {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #7e57c2, #2196f3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(126, 87, 194, 0.5);
+        }
+        
+        .hero-section {
+            text-align: center;
+            padding: 60px 0;
+            margin-bottom: 50px;
+        }
+        
+        .hero-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #7e57c2, #2196f3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero-subtitle {
+            font-size: 20px;
+            color: #9e9e9e;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+        
+        .button-card {
+            background: linear-gradient(135deg, rgba(40, 46, 61, 0.8) 0%, rgba(28, 27, 37, 0.8) 100%);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .button-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(126, 87, 194, 0.1) 0%, transparent 70%);
+            transform: rotate(30deg);
+        }
+        
+        .button-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+        }
+        
+        .button-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #7e57c2;
+        }
+        
+        .button-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        
+        .button-description {
+            color: #9e9e9e;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .coming-soon-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #1c2331 0%, #0f1621 100%);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            color: #7e57c2;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        
+        .modal-title {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        
+        .modal-text {
+            color: #9e9e9e;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .modal-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .modal-btn-primary {
+            background: linear-gradient(90deg, #7e57c2, #2196f3);
+            color: white;
+        }
+        
+        .modal-btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #e0e0e0;
+        }
+        
+        .modal-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 80px;
+            color: #9e9e9e;
+            border-top: 1px solid rgba(94, 53, 177, 0.3);
+        }
+        
+        .footer-text {
+            font-size: 14px;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 36px;
+            }
+            
+            .hero-subtitle {
+                font-size: 18px;
+            }
+            
+            .buttons-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .button-card {
+                padding: 30px 20px;
+            }
+            
+            .modal-content {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon"><i class="fas fa-globe"></i></div>
+                <div class="logo-text">LY官网</div>
+            </div>
+        </header>
+        
+        <section class="hero-section">
+            <h1 class="hero-title">欢迎来到LY官网</h1>
+            <p class="hero-subtitle">探索无限可能，体验科技魅力</p>
+        </section>
+        
+        <div class="buttons-grid">
+            <div class="button-card" onclick="showModal('officialCloud')">
+                <div class="button-icon">
+                    <i class="fas fa-cloud"></i>
+                </div>
+                <h3 class="button-title">官方网盘</h3>
+                <p class="button-description">安全可靠的云存储服务，随时随地访问您的文件</p>
+            </div>
+            
+            <div class="button-card" onclick="showModal('aboutUs')">
+                <div class="button-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3 class="button-title">关于我们</h3>
+                <p class="button-description">了解LY团队的使命、愿景和核心价值观</p>
+            </div>
+            
+            <div class="button-card" onclick="showModal('sponsor')">
+                <div class="button-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h3 class="button-title">赞助我们</h3>
+                <p class="button-description">支持我们的发展，共同创造更美好的未来</p>
+            </div>
+            
+            <div class="button-card" onclick="showModal('comingSoon')">
+                <div class="button-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <h3 class="button-title">待更新</h3>
+                <p class="button-description">精彩内容正在筹备中，敬请期待</p>
+                <div class="coming-soon-badge">即将到来</div>
+            </div>
+        </div>
+        
+        <footer>
+            <p class="footer-text">© 2023 LY官网 | 科技引领未来</p>
+        </footer>
+    </div>
+
+    <!-- 模态框 -->
+    <div id="officialCloudModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('officialCloud')">×</button>
+            <h2 class="modal-title">官方网盘</h2>
+            <p class="modal-text">官方网盘功能正在开发中，即将为您提供安全可靠的云存储服务。</p>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-primary" onclick="closeModal('officialCloud')">确定</button>
+                <button class="modal-btn modal-btn-secondary" onclick="closeModal('officialCloud')">稍后提醒</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="aboutUsModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('aboutUs')">×</button>
+            <h2 class="modal-title">关于我们</h2>
+            <p class="modal-text">LY团队致力于为用户提供优质的科技服务，不断创新，追求卓越。</p>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-primary" onclick="closeModal('aboutUs')">了解详情</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="sponsorModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('sponsor')">×</button>
+            <h2 class="modal-title">赞助我们</h2>
+            <p class="modal-text">感谢您对LY官网的支持，您的赞助将帮助我们提供更好的服务。</p>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-primary" onclick="closeModal('sponsor')">赞助</button>
+                <button class="modal-btn modal-btn-secondary" onclick="closeModal('sponsor')">取消</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="comingSoonModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('comingSoon')">×</button>
+            <h2 class="modal-title">待更新</h2>
+            <p class="modal-text">新功能正在紧张开发中，敬请期待我们的更新！</p>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-primary" onclick="closeModal('comingSoon')">确定</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 显示模态框
+        function showModal(type) {
+            const modal = document.getElementById(type + 'Modal');
+            if (modal) {
+                modal.style.display = 'flex';
+            }
+        }
+        
+        // 关闭模态框
+        function closeModal(type) {
+            const modal = document.getElementById(type + 'Modal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        // 点击模态框外部关闭
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+        
+        // ESC键关闭模态框
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.style.display = 'none';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
