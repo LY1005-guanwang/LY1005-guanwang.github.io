@@ -184,6 +184,92 @@
             font-weight: 600;
         }
         
+        /* 音乐播放器样式 */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, rgba(40, 46, 61, 0.95) 0%, rgba(28, 27, 37, 0.95) 100%);
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(126, 87, 194, 0.3);
+            z-index: 1000;
+            min-width: 200px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .player-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .song-info {
+            font-size: 12px;
+            margin-bottom: 8px;
+            color: #9e9e9e;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 180px;
+        }
+        
+        .control-btn {
+            background: none;
+            border: none;
+            color: #7e57c2;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        
+        .control-btn:hover {
+            color: #2196f3;
+            background: rgba(126, 87, 194, 0.1);
+        }
+        
+        .volume-control {
+            display: flex;
+            align-items: center;
+            margin-top: 8px;
+        }
+        
+        .volume-slider {
+            flex: 1;
+            height: 4px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(255, 255, 255, 0.1);
+            outline: none;
+            border-radius: 2px;
+        }
+        
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #7e57c2;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .volume-slider::-webkit-slider-thumb:hover {
+            background: #2196f3;
+            transform: scale(1.2);
+        }
+        
+        .volume-icon {
+            margin-right: 8px;
+            color: #7e57c2;
+            font-size: 14px;
+        }
+        
         .modal {
             display: none;
             position: fixed;
@@ -308,10 +394,37 @@
             .modal-content {
                 padding: 30px 20px;
             }
+            
+            .music-player {
+                bottom: 10px;
+                left: 10px;
+                right: 10px;
+                min-width: unset;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- 音乐播放器 -->
+    <div class="music-player">
+        <div class="song-info" id="songInfo">正在播放: 罗生门.mp3</div>
+        <div class="player-controls">
+            <button class="control-btn" onclick="previousSong()">
+                <i class="fas fa-step-backward"></i>
+            </button>
+            <button class="control-btn" onclick="togglePlay()">
+                <i class="fas fa-play" id="playIcon"></i>
+            </button>
+            <button class="control-btn" onclick="nextSong()">
+                <i class="fas fa-step-forward"></i>
+            </button>
+        </div>
+        <div class="volume-control">
+            <i class="fas fa-volume-up volume-icon"></i>
+            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.1" value="0.7" oninput="changeVolume(this.value)">
+        </div>
+    </div>
+
     <div class="container">
         <header>
             <div class="logo-button" onclick="window.location.reload()">
@@ -393,7 +506,7 @@
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal('sponsor')">×</button>
             <h2 class="modal-title">赞助我们</h2>
-            <p class="modal-text">请添加作者微信哦 LY-QF-QQ</p>
+            <p class="modal-text">目前暂时无法赞助哦</p>
             <div class="modal-actions">
                 <button class="modal-btn modal-btn-primary" onclick="closeModal('sponsor')">确定</button>
             </div>
@@ -411,8 +524,83 @@
         </div>
     </div>
 
+    <!-- 音频元素 -->
+    <audio id="audioPlayer" loop>
+        <source src="罗生门.mp3" type="audio/mpeg">
+        您的浏览器不支持音频元素。
+    </audio>
+
     <script>
-        // 显示模态框
+        // 音乐播放器功能
+        const audioPlayer = document.getElementById('audioPlayer');
+        const playIcon = document.getElementById('playIcon');
+        const songInfo = document.getElementById('songInfo');
+        const volumeSlider = document.getElementById('volumeSlider');
+        
+        let currentSongIndex = 0;
+        const songs = [
+            { title: '罗生门.mp3', src: '罗生门.mp3' },
+            { title: '别哭了我爱你.mp3', src: '别哭了我爱你.mp3' }
+        ];
+        
+        // 初始化音量
+        audioPlayer.volume = volumeSlider.value;
+        
+        // 自动播放音乐
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                audioPlayer.play().catch(e => {
+                    console.log('自动播放被阻止，需要用户交互:', e);
+                });
+                updatePlayIcon();
+            }, 1000);
+        });
+        
+        // 播放/暂停切换
+        function togglePlay() {
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+            } else {
+                audioPlayer.pause();
+            }
+            updatePlayIcon();
+        }
+        
+        // 更新播放图标
+        function updatePlayIcon() {
+            playIcon.className = audioPlayer.paused ? 'fas fa-play' : 'fas fa-pause';
+        }
+        
+        // 切换下一首
+        function nextSong() {
+            currentSongIndex = (currentSongIndex + 1) % songs.length;
+            loadAndPlaySong();
+        }
+        
+        // 切换上一首
+        function previousSong() {
+            currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+            loadAndPlaySong();
+        }
+        
+        // 加载并播放歌曲
+        function loadAndPlaySong() {
+            const song = songs[currentSongIndex];
+            audioPlayer.src = song.src;
+            audioPlayer.play();
+            songInfo.textContent = `正在播放: ${song.title}`;
+            updatePlayIcon();
+        }
+        
+        // 调整音量
+        function changeVolume(volume) {
+            audioPlayer.volume = volume;
+        }
+        
+        // 歌曲结束时自动播放下一首
+        audioPlayer.addEventListener('ended', nextSong);
+        
+        // 模态框功能
         function showModal(type) {
             const modal = document.getElementById(type + 'Modal');
             if (modal) {
@@ -420,7 +608,6 @@
             }
         }
         
-        // 关闭模态框
         function closeModal(type) {
             const modal = document.getElementById(type + 'Modal');
             if (modal) {
@@ -428,7 +615,6 @@
             }
         }
         
-        // 加入团队功能
         function joinTeam() {
             window.open('https://t.me/LYwdnb66', '_blank');
             closeModal('joinUs');
