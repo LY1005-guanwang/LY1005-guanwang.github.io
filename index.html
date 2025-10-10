@@ -713,6 +713,124 @@
             font-size: 14px;
         }
         
+        /* 新增音乐播放器进度条样式 */
+        .progress-container {
+            margin: 10px 0;
+            position: relative;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .progress-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: linear-gradient(90deg, #7e57c2, #2196f3);
+            border-radius: 2px;
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+        
+        .progress-handle {
+            position: absolute;
+            top: 50%;
+            left: 0%;
+            width: 12px;
+            height: 12px;
+            background: #7e57c2;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 0 5px rgba(126, 87, 194, 0.5);
+            opacity: 0;
+        }
+        
+        .progress-container:hover .progress-handle {
+            opacity: 1;
+        }
+        
+        .progress-handle:hover {
+            transform: translate(-50%, -50%) scale(1.2);
+            background: #2196f3;
+            box-shadow: 0 0 8px rgba(33, 150, 243, 0.7);
+        }
+        
+        .progress-handle:active {
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        
+        .time-display {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 5px;
+        }
+        
+        .song-list {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .song-list.expanded {
+            max-height: 150px;
+        }
+        
+        .song-list-item {
+            padding: 8px 10px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .song-list-item:hover {
+            background: rgba(126, 87, 194, 0.2);
+        }
+        
+        .song-list-item.active {
+            background: rgba(126, 87, 194, 0.3);
+            color: #7e57c2;
+        }
+        
+        .expand-btn {
+            background: none;
+            border: none;
+            color: #7e57c2;
+            font-size: 12px;
+            cursor: pointer;
+            margin-top: 5px;
+            padding: 5px;
+            border-radius: 8px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        
+        .expand-btn:hover {
+            background: rgba(126, 87, 194, 0.1);
+        }
+        
+        .expand-btn i {
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+        
+        .expand-btn.expanded i {
+            transform: rotate(180deg);
+        }
+        
         /* 响应式设计 */
         @media (max-width: 768px) {
             .nav-container {
@@ -813,12 +931,31 @@
                 <i class="fas fa-step-forward"></i>
             </button>
         </div>
+        
+        <!-- 新增进度条和时间显示 -->
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-fill" id="progressFill"></div>
+            <div class="progress-handle" id="progressHandle"></div>
+        </div>
+        <div class="time-display">
+            <span id="currentTime">0:00</span>
+            <span id="totalTime">0:00</span>
+        </div>
+        
         <div class="volume-control">
             <i class="fas fa-volume-up volume-icon"></i>
             <div class="volume-slider-container" id="volumeContainer">
                 <div class="volume-slider-fill" id="volumeFill"></div>
                 <div class="volume-slider-handle" id="volumeHandle"></div>
             </div>
+        </div>
+        
+        <!-- 新增歌曲列表 -->
+        <button class="expand-btn" id="expandBtn" onclick="toggleSongList()">
+            播放列表 <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="song-list" id="songList">
+            <!-- 歌曲列表将通过JavaScript动态生成 -->
         </div>
     </div>
 
@@ -962,13 +1099,26 @@
         const navContainer = document.getElementById('navContainer');
         const swipeHint = document.getElementById('swipeHint');
         
+        // 新增音乐播放器元素
+        const progressContainer = document.getElementById('progressContainer');
+        const progressFill = document.getElementById('progressFill');
+        const progressHandle = document.getElementById('progressHandle');
+        const currentTimeDisplay = document.getElementById('currentTime');
+        const totalTimeDisplay = document.getElementById('totalTime');
+        const expandBtn = document.getElementById('expandBtn');
+        const songList = document.getElementById('songList');
+        
         let currentSongIndex = 0;
         const songs = [
             { title: '罗生门.mp3', src: '罗生门.mp3' },
-            { title: '别哭了我爱你.mp3', src: '别哭了我爱你.mp3' }
+            { title: '别哭了我爱你.mp3', src: '别哭了我爱你.mp3' },
+            { title: '我知道你不爱我.mp3', src: '我知道你不爱我.mp3' },
+            { title: '其实.mp3', src: '其实.mp3' },
+            { title: '指纹.mp3', src: '指纹.mp3' }
         ];
         
         let isDragging = false;
+        let isDraggingProgress = false;
         let volume = 0.7;
         let currentNavIndex = 0;
         let startX = 0;
@@ -994,17 +1144,26 @@
             // 音量拖动事件
             setupVolumeControls();
             
+            // 进度条拖动事件
+            setupProgressControls();
+            
             // 初始化背景选择器
             initBackgroundSelector();
             
             // 初始化导航栏
             initNavigation();
             
+            // 初始化歌曲列表
+            initSongList();
+            
             // 加载保存的背景
             loadSavedBackground();
             
             // 设置导航栏拖动事件
             setupNavDrag();
+            
+            // 设置音频事件监听
+            setupAudioEvents();
         }
         
         // 初始化导航栏
@@ -1037,6 +1196,151 @@
             
             // 更新导航栏状态
             updateNavState();
+        }
+        
+        // 初始化歌曲列表
+        function initSongList() {
+            songs.forEach((song, index) => {
+                const songItem = document.createElement('div');
+                songItem.className = 'song-list-item';
+                if (index === currentSongIndex) songItem.classList.add('active');
+                songItem.textContent = song.title;
+                songItem.onclick = function() {
+                    selectSong(index);
+                };
+                songList.appendChild(songItem);
+            });
+        }
+        
+        // 设置音频事件监听
+        function setupAudioEvents() {
+            // 更新进度条和时间显示
+            audioPlayer.addEventListener('timeupdate', updateProgress);
+            
+            // 当音频元数据加载完成时更新总时长
+            audioPlayer.addEventListener('loadedmetadata', function() {
+                updateTotalTime();
+            });
+            
+            // 当音频结束时自动播放下一首
+            audioPlayer.addEventListener('ended', function() {
+                nextSong();
+            });
+        }
+        
+        // 更新进度条
+        function updateProgress() {
+            if (!isDraggingProgress) {
+                const currentTime = audioPlayer.currentTime;
+                const duration = audioPlayer.duration;
+                
+                if (duration > 0) {
+                    const progressPercent = (currentTime / duration) * 100;
+                    progressFill.style.width = progressPercent + '%';
+                    progressHandle.style.left = progressPercent + '%';
+                    
+                    // 更新时间显示
+                    updateTimeDisplay(currentTime, duration);
+                }
+            }
+        }
+        
+        // 更新时间显示
+        function updateTimeDisplay(currentTime, duration) {
+            currentTimeDisplay.textContent = formatTime(currentTime);
+            totalTimeDisplay.textContent = formatTime(duration);
+        }
+        
+        // 更新总时长
+        function updateTotalTime() {
+            const duration = audioPlayer.duration;
+            if (duration > 0) {
+                totalTimeDisplay.textContent = formatTime(duration);
+            }
+        }
+        
+        // 格式化时间 (秒 -> 分:秒)
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+        
+        // 设置进度条控制
+        function setupProgressControls() {
+            progressContainer.addEventListener('mousedown', startProgressDrag);
+            document.addEventListener('mousemove', dragProgress);
+            document.addEventListener('mouseup', stopProgressDrag);
+            
+            progressContainer.addEventListener('touchstart', startProgressDrag);
+            document.addEventListener('touchmove', dragProgress);
+            document.addEventListener('touchend', stopProgressDrag);
+        }
+        
+        // 开始拖动进度条
+        function startProgressDrag(e) {
+            isDraggingProgress = true;
+            updateProgressFromEvent(e);
+            e.preventDefault();
+        }
+        
+        // 拖动进度条
+        function dragProgress(e) {
+            if (!isDraggingProgress) return;
+            updateProgressFromEvent(e);
+            e.preventDefault();
+        }
+        
+        // 停止拖动进度条
+        function stopProgressDrag() {
+            isDraggingProgress = false;
+        }
+        
+        // 从事件更新进度
+        function updateProgressFromEvent(e) {
+            const rect = progressContainer.getBoundingClientRect();
+            let clientX;
+            
+            if (e.type.includes('mouse')) {
+                clientX = e.clientX;
+            } else if (e.touches) {
+                clientX = e.touches[0].clientX;
+            }
+            
+            if (clientX) {
+                let progressPercent = (clientX - rect.left) / rect.width;
+                progressPercent = Math.max(0, Math.min(1, progressPercent));
+                
+                const duration = audioPlayer.duration;
+                if (duration > 0) {
+                    audioPlayer.currentTime = progressPercent * duration;
+                    updateTimeDisplay(audioPlayer.currentTime, duration);
+                }
+                
+                progressFill.style.width = progressPercent * 100 + '%';
+                progressHandle.style.left = progressPercent * 100 + '%';
+            }
+        }
+        
+        // 切换歌曲列表显示
+        function toggleSongList() {
+            songList.classList.toggle('expanded');
+            expandBtn.classList.toggle('expanded');
+        }
+        
+        // 选择歌曲
+        function selectSong(index) {
+            currentSongIndex = index;
+            loadAndPlaySong();
+            
+            // 更新歌曲列表激活状态
+            document.querySelectorAll('.song-list-item').forEach((item, i) => {
+                if (i === index) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
         }
         
         // 设置导航栏拖动事件
@@ -1362,6 +1666,20 @@
             songInfo.textContent = '正在播放: ' + song.title;
             audioPlayer.play();
             updatePlayIcon();
+            
+            // 更新歌曲列表激活状态
+            document.querySelectorAll('.song-list-item').forEach((item, i) => {
+                if (i === currentSongIndex) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+            
+            // 重置进度条
+            progressFill.style.width = '0%';
+            progressHandle.style.left = '0%';
+            currentTimeDisplay.textContent = '0:00';
         }
         
         // 切换音乐播放器显示/隐藏
