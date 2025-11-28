@@ -3,1725 +3,352 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LY官网</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>LY加速器 - 公益端</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', 'Arial', sans-serif;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #0f1621 0%, #1c2331 100%);
+            background: linear-gradient(135deg, #0c0c1d 0%, #1a1a2e 50%, #16213e 100%);
             color: #e0e0e0;
             min-height: 100vh;
-            overflow-x: hidden;
-            transition: all 0.5s ease;
-        }
-        
-        /* 背景样式定义 */
-        body.background-1 {
-            background: linear-gradient(135deg, #0f1621 0%, #1c2331 100%);
-        }
-        
-        body.background-2 {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-        }
-        
-        body.background-3 {
-            background: linear-gradient(135deg, #2d3436 0%, #636e72 100%);
-        }
-        
-        body.background-4 {
-            background: linear-gradient(135deg, #0c2461 0%, #1e3799 50%, #4a69bd 100%);
-        }
-        
-        body.background-5 {
-            background: linear-gradient(135deg, #182c61 0%, #273c75 50%, #40739e 100%);
-        }
-        
-        body.background-6 {
-            background: linear-gradient(135deg, #2f3542 0%, #747d8c 100%);
-        }
-        
-        body.background-7 {
-            background: linear-gradient(135deg, #0a3d62 0%, #1e5f8a 50%, #3c8dad 100%);
-        }
-        
-        body.background-8 {
-            background: linear-gradient(135deg, #222f3e 0%, #34495e 50%, #546de5 100%);
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
         }
         
-        header {
-            padding: 20px 0;
-            border-bottom: 1px solid rgba(94, 53, 177, 0.5);
-            margin-bottom: 50px;
-            position: relative;
-        }
-        
-        /* 滑动导航栏容器 */
-        .nav-container {
-            position: relative;
+        .container {
+            width: 100%;
+            max-width: 420px;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
             overflow: hidden;
-            padding: 0 10px;
-            cursor: grab;
-            user-select: none;
-        }
-        
-        .nav-container:active {
-            cursor: grabbing;
-        }
-        
-        /* 导航栏 */
-        .nav-slider {
-            display: flex;
-            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            gap: 15px;
-            padding: 5px 0;
-        }
-        
-        /* 导航按钮样式 */
-        .nav-button {
-            display: flex;
-            align-items: center;
-            padding: 12px 20px;
-            border-radius: 50px;
-            background: linear-gradient(135deg, rgba(40, 46, 61, 0.8) 0%, rgba(28, 27, 37, 0.8) 100%);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(100, 200, 255, 0.1);
             position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(126, 87, 194, 0.3);
-            flex-shrink: 0;
-            width: 180px;
-            backdrop-filter: blur(5px);
         }
         
-        .nav-button::before {
+        .container::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(126, 87, 194, 0.1) 0%, transparent 70%);
-            transform: rotate(30deg);
-            transition: all 0.5s ease;
-            opacity: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #3b82f6, transparent);
         }
         
-        .nav-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-            border-color: rgba(126, 87, 194, 0.5);
-            backdrop-filter: blur(10px);
+        .header {
+            padding: 20px;
+            text-align: center;
+            background: rgba(30, 41, 59, 0.7);
+            border-bottom: 1px solid rgba(100, 200, 255, 0.1);
         }
         
-        .nav-button:hover::before {
-            opacity: 1;
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: #60a5fa;
         }
         
-        .nav-img {
-            width: 32px;
-            height: 32px;
-            margin-right: 12px;
-            border-radius: 8px;
-            object-fit: cover;
-            background-size: cover;
-            background-position: center;
-            border: 1px solid rgba(126, 87, 194, 0.3);
-            transition: all 0.3s ease;
-            filter: brightness(0.9);
+        .channel {
+            background: rgba(59, 130, 246, 0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
         }
         
-        .nav-button:hover .nav-img {
-            filter: brightness(1.1) blur(0.5px);
-            transform: scale(1.05);
+        .logo-area {
+            margin: 15px 0;
         }
         
-        .nav-text {
-            font-size: 16px;
-            font-weight: 700;
-            background: linear-gradient(90deg, #7e57c2, #2196f3);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 10px rgba(126, 87, 194, 0.5);
-            transition: all 0.3s ease;
-        }
-        
-        .nav-button:hover .nav-text {
-            text-shadow: 0 0 15px rgba(126, 87, 194, 0.8);
-        }
-        
-        /* 指示器 */
-        .nav-indicator {
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            border-radius: 50%;
             display: flex;
             justify-content: center;
-            margin-top: 15px;
-            gap: 8px;
+            align-items: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+            position: relative;
         }
         
-        .indicator-dot {
-            width: 8px;
-            height: 8px;
+        .logo::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
-            background: rgba(126, 87, 194, 0.3);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .indicator-dot.active {
-            background: #7e57c2;
-            transform: scale(1.2);
-        }
-        
-        /* 滑动提示 */
-        .swipe-hint {
-            text-align: center;
-            color: rgba(126, 87, 194, 0.6);
-            font-size: 12px;
-            margin-top: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
             animation: pulse 2s infinite;
-            display: none;
         }
         
         @keyframes pulse {
-            0% { opacity: 0.5; }
-            50% { opacity: 1; }
-            100% { opacity: 0.5; }
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
         }
         
-        .hero-section {
-            text-align: center;
-            padding: 60px 0;
-            margin-bottom: 50px;
-        }
-        
-        .hero-title {
-            font-size: 48px;
+        .title {
+            font-size: 1.8rem;
             font-weight: 700;
-            margin-bottom: 20px;
-            background: linear-gradient(90deg, #7e57c2, #2196f3);
+            margin: 10px 0 5px;
+            background: linear-gradient(90deg, #60a5fa, #3b82f6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         
-        .hero-subtitle {
-            font-size: 20px;
-            color: #9e9e9e;
-            margin-bottom: 40px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .buttons-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin: 60px 0;
-        }
-        
-        .button-card {
-            background: linear-gradient(135deg, rgba(40, 46, 61, 0.8) 0%, rgba(28, 27, 37, 0.8) 100%);
-            border-radius: 20px;
-            padding: 40px 30px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .button-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(126, 87, 194, 0.1) 0%, transparent 70%);
-            transform: rotate(30deg);
-        }
-        
-        .button-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-        }
-        
-        .button-icon {
-            font-size: 48px;
-            margin-bottom: 20px;
-            color: #7e57c2;
-        }
-        
-        .button-title {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: #fff;
-        }
-        
-        .button-description {
-            color: #9e9e9e;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-        
-        .coming-soon-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        
-        /* 背景选择器样式 */
-        .background-selector {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .background-selector-content {
-            background: linear-gradient(135deg, #1c2331 0%, #0f1621 100%);
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 800px;
-            width: 90%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-            position: relative;
-        }
-        
-        .background-selector-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .background-selector-title {
-            font-size: 24px;
-            font-weight: 600;
-            color: #fff;
-        }
-        
-        .background-selector-close {
-            font-size: 24px;
-            color: #7e57c2;
-            cursor: pointer;
-            background: none;
-            border: none;
-            transition: all 0.3s;
-        }
-        
-        .background-selector-close:hover {
-            transform: scale(1.2);
-            color: #2196f3;
-        }
-        
-        .background-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        
-        .background-option {
-            height: 100px;
-            border-radius: 15px;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        
-        .background-option::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-        }
-        
-        .background-option:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-        }
-        
-        .background-option:hover::before {
-            background: rgba(0, 0, 0, 0.1);
-        }
-        
-        .background-option.active {
-            box-shadow: 0 0 0 3px #7e57c2, 0 10px 25px rgba(0, 0, 0, 0.4);
-        }
-        
-        .background-option.active::after {
-            content: '✓';
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 25px;
-            height: 25px;
-            background: #7e57c2;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: bold;
-        }
-        
-        .background-name {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            font-size: 12px;
-            font-weight: 600;
-            color: white;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-        }
-        
-        /* 音乐播放器样式 - 优化版 */
-        .music-player {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: linear-gradient(135deg, rgba(40, 46, 61, 0.95) 0%, rgba(28, 27, 37, 0.95) 100%);
-            border-radius: 15px;
-            padding: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(126, 87, 194, 0.3);
-            z-index: 1000;
-            min-width: 200px;
-            backdrop-filter: blur(10px);
-            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            transform-origin: left bottom;
-        }
-        
-        .music-player.hidden {
-            transform: translateX(-100%) scale(0.8);
-            opacity: 0;
-            pointer-events: none;
-        }
-        
-        .player-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .subtitle {
+            font-size: 1rem;
+            color: #94a3b8;
             margin-bottom: 10px;
         }
         
-        .player-title {
-            font-size: 12px;
-            font-weight: 600;
-            color: #7e57c2;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .toggle-btn {
-            background: none;
-            border: none;
-            color: #9e9e9e;
-            font-size: 12px;
-            cursor: pointer;
-            padding: 3px 8px;
-            border-radius: 12px;
-            transition: all 0.3s;
-            background: rgba(126, 87, 194, 0.1);
-        }
-        
-        .toggle-btn:hover {
-            color: #7e57c2;
-            background: rgba(126, 87, 194, 0.2);
-        }
-        
-        .song-info {
-            font-size: 12px;
-            margin-bottom: 8px;
-            color: #e0e0e0;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 180px;
-            position: relative;
-        }
-        
-        .song-info::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 1px;
-            background: linear-gradient(90deg, #7e57c2, transparent);
-            opacity: 0.5;
-        }
-        
-        .player-controls {
+        .stats {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            margin-bottom: 10px;
-        }
-        
-        .control-btn {
-            background: none;
-            border: none;
-            color: #7e57c2;
-            font-size: 16px;
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 50%;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .control-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(126, 87, 194, 0.1);
-            border-radius: 50%;
-            transform: scale(0);
-            transition: all 0.3s;
-            opacity: 0;
-        }
-        
-        .control-btn:hover::before {
-            transform: scale(1);
-            opacity: 1;
-        }
-        
-        .control-btn:hover {
-            color: #2196f3;
-            transform: translateY(-2px);
-        }
-        
-        .volume-control {
-            display: flex;
-            align-items: center;
-            margin-top: 8px;
-            position: relative;
-        }
-        
-        .volume-icon {
-            margin-right: 8px;
-            color: #7e57c2;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-        
-        .volume-slider-container {
-            flex: 1;
-            position: relative;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
-            overflow: hidden;
-            cursor: pointer;
-        }
-        
-        .volume-slider-fill {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            background: linear-gradient(90deg, #7e57c2, #2196f3);
-            border-radius: 2px;
-            width: 70%;
-            transition: width 0.2s ease;
-        }
-        
-        .volume-slider-handle {
-            position: absolute;
-            top: 50%;
-            left: 70%;
-            width: 12px;
-            height: 12px;
-            background: #7e57c2;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 0 5px rgba(126, 87, 194, 0.5);
-        }
-        
-        .volume-slider-handle:hover {
-            transform: translate(-50%, -50%) scale(1.2);
-            background: #2196f3;
-            box-shadow: 0 0 8px rgba(33, 150, 243, 0.7);
-        }
-        
-        .volume-slider-handle:active {
-            transform: translate(-50%, -50%) scale(1.1);
-        }
-        
-        .mini-player {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #7e57c2, #2196f3);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 999;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s;
-            opacity: 0;
-            pointer-events: none;
-            transform: scale(0.8);
-        }
-        
-        .mini-player.visible {
-            opacity: 1;
-            pointer-events: auto;
-            transform: scale(1);
-        }
-        
-        .mini-player:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-        }
-        
-        .mini-player i {
-            color: white;
-            font-size: 16px;
-        }
-        
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .modal-content {
-            background: linear-gradient(135deg, #1c2331 0%, #0f1621 100%);
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 500px;
-            width: 90%;
-            text-align: center;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-            position: relative;
-        }
-        
-        .modal-close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 24px;
-            color: #7e57c2;
-            cursor: pointer;
-            background: none;
-            border: none;
-        }
-        
-        .modal-title {
-            font-size: 28px;
-            margin-bottom: 20px;
-            color: #fff;
-        }
-        
-        .modal-text {
-            color: #9e9e9e;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-        
-        .modal-actions {
-            display: flex;
+            padding: 20px;
             gap: 15px;
-            justify-content: center;
         }
         
-        .modal-btn {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        
-        .modal-btn-primary {
-            background: linear-gradient(90deg, #7e57c2, #2196f3);
-            color: white;
-        }
-        
-        .modal-btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: #e0e0e0;
-        }
-        
-        .modal-btn:hover {
-            transform: translateY(-2px);
-        }
-        
-        footer {
+        .stat-card {
+            flex: 1;
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 12px;
+            padding: 15px;
             text-align: center;
-            padding: 40px 0;
-            margin-top: 80px;
-            color: #9e9e9e;
-            border-top: 1px solid rgba(94, 53, 177, 0.3);
+            border: 1px solid rgba(100, 200, 255, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
         
-        .footer-text {
-            font-size: 14px;
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
         
-        /* 新增音乐播放器进度条样式 */
-        .progress-container {
-            margin: 10px 0;
-            position: relative;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
-            overflow: hidden;
-            cursor: pointer;
+        .stat-title {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-bottom: 8px;
         }
         
-        .progress-fill {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            background: linear-gradient(90deg, #7e57c2, #2196f3);
-            border-radius: 2px;
-            width: 0%;
-            transition: width 0.1s ease;
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #60a5fa;
         }
         
-        .progress-handle {
-            position: absolute;
-            top: 50%;
-            left: 0%;
-            width: 12px;
-            height: 12px;
-            background: #7e57c2;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 0 5px rgba(126, 87, 194, 0.5);
-            opacity: 0;
+        .delay-value {
+            animation: pulse 2s infinite;
         }
         
-        .progress-container:hover .progress-handle {
-            opacity: 1;
+        .features {
+            padding: 0 20px;
         }
         
-        .progress-handle:hover {
-            transform: translate(-50%, -50%) scale(1.2);
-            background: #2196f3;
-            box-shadow: 0 0 8px rgba(33, 150, 243, 0.7);
-        }
-        
-        .progress-handle:active {
-            transform: translate(-50%, -50%) scale(1.1);
-        }
-        
-        .time-display {
-            display: flex;
-            justify-content: space-between;
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.7);
-            margin-top: 5px;
-        }
-        
-        .song-list {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-            margin-top: 10px;
-        }
-        
-        .song-list.expanded {
-            max-height: 150px;
-        }
-        
-        .song-list-item {
-            padding: 8px 10px;
-            border-radius: 8px;
-            margin-bottom: 5px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: all 0.2s;
-            background: rgba(255, 255, 255, 0.05);
-        }
-        
-        .song-list-item:hover {
-            background: rgba(126, 87, 194, 0.2);
-        }
-        
-        .song-list-item.active {
-            background: rgba(126, 87, 194, 0.3);
-            color: #7e57c2;
-        }
-        
-        .expand-btn {
-            background: none;
-            border: none;
-            color: #7e57c2;
-            font-size: 12px;
-            cursor: pointer;
-            margin-top: 5px;
-            padding: 5px;
-            border-radius: 8px;
-            transition: all 0.3s;
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 15px 0;
+            color: #e2e8f0;
             display: flex;
             align-items: center;
+        }
+        
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 16px;
+            background: #3b82f6;
+            margin-right: 8px;
+            border-radius: 2px;
+        }
+        
+        .feature-list {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+        
+        .feature-item {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+        
+        .feature-item::before {
+            content: '✓';
+            color: #10b981;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .action-buttons {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
             justify-content: center;
-            width: 100%;
+            align-items: center;
         }
         
-        .expand-btn:hover {
-            background: rgba(126, 87, 194, 0.1);
+        .btn-primary {
+            background: linear-gradient(90deg, #f59e0b, #d97706);
+            color: white;
+            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
         }
         
-        .expand-btn i {
-            margin-left: 5px;
-            transition: transform 0.3s;
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(245, 158, 11, 0.4);
         }
         
-        .expand-btn.expanded i {
-            transform: rotate(180deg);
+        .rules {
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 0 20px 20px;
+            border: 1px solid rgba(100, 200, 255, 0.1);
         }
         
-        /* 响应式设计 */
-        @media (max-width: 768px) {
-            .nav-container {
-                padding: 0 5px;
-            }
-            
-            .nav-button {
-                width: 160px;
-                padding: 10px 15px;
-            }
-            
-            .nav-img {
-                width: 28px;
-                height: 28px;
-                margin-right: 8px;
-            }
-            
-            .nav-text {
-                font-size: 14px;
-            }
-            
-            .swipe-hint {
-                display: block;
-            }
-            
-            .hero-title {
-                font-size: 36px;
-            }
-            
-            .hero-subtitle {
-                font-size: 18px;
-            }
-            
-            .buttons-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            
-            .button-card {
-                padding: 30px 20px;
-            }
-            
-            .modal-content {
-                padding: 30px 20px;
-            }
-            
-            .music-player {
-                bottom: 10px;
-                left: 10px;
-                right: 10px;
-                min-width: unset;
-            }
-            
-            .background-grid {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            }
-            
-            .background-option {
-                height: 80px;
-            }
+        .rule-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
+        
+        .rule-item::before {
+            content: '△';
+            color: #f59e0b;
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 15px;
+            font-size: 0.8rem;
+            color: #64748b;
+            border-top: 1px solid rgba(100, 200, 255, 0.1);
         }
     </style>
 </head>
-<body class="background-1">
-    <!-- 背景选择器 -->
-    <div class="background-selector" id="backgroundSelector">
-        <div class="background-selector-content">
-            <div class="background-selector-header">
-                <h2 class="background-selector-title">选择背景风格</h2>
-                <button class="background-selector-close" onclick="closeBackgroundSelector()">×</button>
-            </div>
-            <div class="background-grid" id="backgroundGrid">
-                <!-- 背景选项将通过JavaScript动态生成 -->
-            </div>
-        </div>
-    </div>
-
-    <!-- 迷你播放器 -->
-    <div class="mini-player" id="miniPlayer" onclick="toggleMusicPlayer()">
-        <i class="fas fa-music"></i>
-    </div>
-
-    <!-- 音乐播放器 -->
-    <div class="music-player" id="musicPlayer">
-        <div class="player-header">
-            <div class="player-title">音乐播放器</div>
-            <button class="toggle-btn" onclick="toggleMusicPlayer()">隐藏</button>
-        </div>
-        <div class="song-info" id="songInfo">正在播放: 罗生门.mp3</div>
-        <div class="player-controls">
-            <button class="control-btn" onclick="previousSong()">
-                <i class="fas fa-step-backward"></i>
-            </button>
-            <button class="control-btn" onclick="togglePlay()">
-                <i class="fas fa-play" id="playIcon"></i>
-            </button>
-            <button class="control-btn" onclick="nextSong()">
-                <i class="fas fa-step-forward"></i>
-            </button>
-        </div>
-        
-        <!-- 新增进度条和时间显示 -->
-        <div class="progress-container" id="progressContainer">
-            <div class="progress-fill" id="progressFill"></div>
-            <div class="progress-handle" id="progressHandle"></div>
-        </div>
-        <div class="time-display">
-            <span id="currentTime">0:00</span>
-            <span id="totalTime">0:00</span>
-        </div>
-        
-        <div class="volume-control">
-            <i class="fas fa-volume-up volume-icon"></i>
-            <div class="volume-slider-container" id="volumeContainer">
-                <div class="volume-slider-fill" id="volumeFill"></div>
-                <div class="volume-slider-handle" id="volumeHandle"></div>
-            </div>
-        </div>
-        
-        <!-- 新增歌曲列表 -->
-        <button class="expand-btn" id="expandBtn" onclick="toggleSongList()">
-            播放列表 <i class="fas fa-chevron-down"></i>
-        </button>
-        <div class="song-list" id="songList">
-            <!-- 歌曲列表将通过JavaScript动态生成 -->
-        </div>
-    </div>
-
+<body>
     <div class="container">
-        <header>
-            <!-- 滑动导航栏 -->
-            <div class="nav-container" id="navContainer">
-                <div class="nav-slider" id="navSlider">
-                    <!-- 导航按钮将通过JavaScript动态生成 -->
-                </div>
-                
-                <div class="nav-indicator" id="navIndicator">
-                    <!-- 指示点将通过JavaScript动态生成 -->
-                </div>
-                
-                <div class="swipe-hint" id="swipeHint">
-                    <i class="fas fa-arrows-alt-h"></i> 左右滑动查看更多
-                </div>
+        <div class="header">
+            <div class="status-bar">
+                <div class="status">LY加速器已连接</div>
+                <div class="channel">频道 @LYwdnb66</div>
             </div>
-        </header>
+            <div class="logo-area">
+                <div class="logo">LY</div>
+            </div>
+            <h1 class="title">LY 公益端</h1>
+            <p class="subtitle">LY工作室为你保驾护航</p>
+        </div>
         
-        <section class="hero-section">
-            <h1 class="hero-title">欢迎来到LY官网</h1>
-            <p class="hero-subtitle">探索无限可能，体验科技魅力</p>
-        </section>
-        
-        <div class="buttons-grid">
-            <div class="button-card" onclick="joinTeam()">
-                <div class="button-icon">
-                    <i class="fas fa-user-plus"></i>
-                </div>
-                <h3 class="button-title">加入我们</h3>
-                <p class="button-description">成为LY团队的一员，共同创造精彩</p>
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-title">服务器延迟</div>
+                <div class="stat-value delay-value">28 ms</div>
             </div>
-            
-            <div class="button-card" onclick="showModal('aboutUs')">
-                <div class="button-icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                <h3 class="button-title">关于我们</h3>
-                <p class="button-description">了解LY团队的使命、愿景和核心价值观</p>
-            </div>
-            
-            <div class="button-card" onclick="showModal('sponsor')">
-                <div class="button-icon">
-                    <i class="fas fa-heart"></i>
-                </div>
-                <h3 class="button-title">赞助我们</h3>
-                <p class="button-description">支持我们的发展，共同创造更美好的未来</p>
-            </div>
-            
-            <div class="button-card" onclick="showModal('comingSoon')">
-                <div class="button-icon">
-                    <i class="fas fa-cogs"></i>
-                </div>
-                <h3 class="button-title">待更新</h3>
-                <p class="button-description">精彩内容正在筹备中，敬请期待</p>
-                <div class="coming-soon-badge">即将到来</div>
+            <div class="stat-card">
+                <div class="stat-title">当前时间</div>
+                <div class="stat-value" id="current-time">20:48:45</div>
             </div>
         </div>
         
-        <footer>
-            <p class="footer-text">© 2023 LY官网 | 科技引领未来</p>
-        </footer>
-    </div>
-
-    <!-- 模态框 -->
-    <div id="aboutUsModal" class="modal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('aboutUs')">×</button>
-            <h2 class="modal-title">关于我们</h2>
-            <p class="modal-text">此网站由LY主导开发，小凌、greenning、冰岛赞助开发</p>
-            <div class="modal-actions">
-                <button class="modal-btn modal-btn-primary" onclick="closeModal('aboutUs')">确定</button>
-            </div>
+        <div class="features">
+            <h2 class="section-title">核心功能</h2>
+            <ul class="feature-list">
+                <li class="feature-item">安卓连打规则连接成功</li>
+                <li class="feature-item">防掉框防3方无异常优化网络</li>
+                <li class="feature-item">使用说明：全程端口启动游戏前执行</li>
+                <li class="feature-item">sh清理925</li>
+            </ul>
+        </div>
+        
+        <div class="action-buttons">
+            <button class="btn btn-primary">官方频道 @LYwdnb66</button>
+        </div>
+        
+        <div class="rules">
+            <div class="rule-item">内核已是无敌路，不演后果你自负</div>
+            <div class="rule-item">支持上分支持明演</div>
+        </div>
+        
+        <div class="footer">
+            LY加速器 © 2023 - 安全稳定的游戏体验
         </div>
     </div>
-    
-    <div id="sponsorModal" class="modal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('sponsor')">×</button>
-            <h2 class="modal-title">赞助我们</h2>
-            <p class="modal-text">目前暂时无法赞助哦</p>
-            <div class="modal-actions">
-                <button class="modal-btn modal-btn-primary" onclick="closeModal('sponsor')">确定</button>
-            </div>
-        </div>
-    </div>
-    
-    <div id="comingSoonModal" class="modal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('comingSoon')">×</button>
-            <h2 class="modal-title">待更新</h2>
-            <p class="modal-text">新功能正在紧张开发中，敬请期待我们的更新！</p>
-            <div class="modal-actions">
-                <button class="modal-btn modal-btn-primary" onclick="closeModal('comingSoon')">确定</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 音频元素 -->
-    <audio id="audioPlayer" loop>
-        <source src="罗生门.mp3" type="audio/mpeg">
-        您的浏览器不支持音频元素。
-    </audio>
 
     <script>
-        // 导航数据
-        const navItems = [
-            { id: 1, name: 'LY官网', image: 'TP.png', action: 'openBackgroundSelector' },
-            { id: 2, name: '冰岛科技', image: 'TP2.png', action: 'showIceIsland' },
-            { id: 3, name: 'greenning', image: 'TP3.png', action: 'showGreenning' },
-            { id: 4, name: '小凌', image: 'TP4.png', action: 'showXiaoLing' }
-        ];
+        // 更新当前时间
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('zh-CN', { 
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('current-time').textContent = timeString;
+        }
         
-        // 背景数据
-        const backgrounds = [
-            { id: 1, name: '深邃夜空', class: 'background-1' },
-            { id: 2, name: '深海蓝', class: 'background-2' },
-            { id: 3, name: '石墨灰', class: 'background-3' },
-            { id: 4, name: '皇家蓝', class: 'background-4' },
-            { id: 5, name: '午夜蓝', class: 'background-5' },
-            { id: 6, name: '石板灰', class: 'background-6' },
-            { id: 7, name: '海洋蓝', class: 'background-7' },
-            { id: 8, name: '星空紫', class: 'background-8' }
-        ];
-        
-        // 音乐播放器功能
-        const audioPlayer = document.getElementById('audioPlayer');
-        const playIcon = document.getElementById('playIcon');
-        const songInfo = document.getElementById('songInfo');
-        const musicPlayer = document.getElementById('musicPlayer');
-        const miniPlayer = document.getElementById('miniPlayer');
-        const volumeFill = document.getElementById('volumeFill');
-        const volumeHandle = document.getElementById('volumeHandle');
-        const volumeContainer = document.getElementById('volumeContainer');
-        const backgroundSelector = document.getElementById('backgroundSelector');
-        const backgroundGrid = document.getElementById('backgroundGrid');
-        const navSlider = document.getElementById('navSlider');
-        const navIndicator = document.getElementById('navIndicator');
-        const navContainer = document.getElementById('navContainer');
-        const swipeHint = document.getElementById('swipeHint');
-        
-        // 新增音乐播放器元素
-        const progressContainer = document.getElementById('progressContainer');
-        const progressFill = document.getElementById('progressFill');
-        const progressHandle = document.getElementById('progressHandle');
-        const currentTimeDisplay = document.getElementById('currentTime');
-        const totalTimeDisplay = document.getElementById('totalTime');
-        const expandBtn = document.getElementById('expandBtn');
-        const songList = document.getElementById('songList');
-        
-        let currentSongIndex = 0;
-        const songs = [
-            { title: '罗生门.mp3', src: '罗生门.mp3' },
-            { title: '别哭了我爱你.mp3', src: '别哭了我爱你.mp3' },
-            { title: '我知道你不爱我.mp3', src: '我知道你不爱我.mp3' },
-            { title: '其实.mp3', src: '其实.mp3' },
-            { title: '指纹.mp3', src: '指纹.mp3' }
-        ];
-        
-        let isDragging = false;
-        let isDraggingProgress = false;
-        let volume = 0.7;
-        let currentNavIndex = 0;
-        let startX = 0;
-        let currentTranslate = 0;
-        let prevTranslate = 0;
-        let animationID = 0;
-        let isDraggingNav = false;
+        // 随机生成服务器延迟（15-50之间）
+        function updateDelay() {
+            const delay = Math.floor(Math.random() * 36) + 15; // 15-50之间的随机数
+            document.querySelector('.delay-value').textContent = delay + ' ms';
+        }
         
         // 初始化
-        function init() {
-            // 设置初始音量
-            audioPlayer.volume = volume;
-            updateVolumeUI(volume);
-            
-            // 自动播放音乐
+        updateTime();
+        updateDelay();
+        
+        // 每秒更新时间
+        setInterval(updateTime, 1000);
+        
+        // 每5秒更新延迟（模拟真实变化）
+        setInterval(updateDelay, 5000);
+        
+        // 添加点击按钮的交互效果
+        document.querySelector('.btn-primary').addEventListener('click', function() {
+            this.textContent = '正在跳转...';
             setTimeout(() => {
-                audioPlayer.play().catch(e => {
-                    console.log('自动播放被阻止，需要用户交互:', e);
-                });
-                updatePlayIcon();
+                this.textContent = '官方频道 @LYwdnb66';
+                alert('已复制频道信息到剪贴板');
             }, 1000);
-            
-            // 音量拖动事件
-            setupVolumeControls();
-            
-            // 进度条拖动事件
-            setupProgressControls();
-            
-            // 初始化背景选择器
-            initBackgroundSelector();
-            
-            // 初始化导航栏
-            initNavigation();
-            
-            // 初始化歌曲列表
-            initSongList();
-            
-            // 加载保存的背景
-            loadSavedBackground();
-            
-            // 设置导航栏拖动事件
-            setupNavDrag();
-            
-            // 设置音频事件监听
-            setupAudioEvents();
-        }
-        
-        // 初始化导航栏
-        function initNavigation() {
-            // 创建导航按钮
-            navItems.forEach((item, index) => {
-                const navButton = document.createElement('div');
-                navButton.className = 'nav-button';
-                navButton.onclick = function() { executeNavAction(item.action); };
-                
-                const navImg = document.createElement('div');
-                navImg.className = 'nav-img';
-                navImg.style.backgroundImage = `url('${item.image}')`;
-                
-                const navText = document.createElement('div');
-                navText.className = 'nav-text';
-                navText.textContent = item.name;
-                
-                navButton.appendChild(navImg);
-                navButton.appendChild(navText);
-                navSlider.appendChild(navButton);
-                
-                // 创建指示点
-                const indicatorDot = document.createElement('div');
-                indicatorDot.className = 'indicator-dot';
-                if (index === 0) indicatorDot.classList.add('active');
-                indicatorDot.onclick = function() { goToNavSlide(index); };
-                navIndicator.appendChild(indicatorDot);
-            });
-            
-            // 更新导航栏状态
-            updateNavState();
-        }
-        
-        // 初始化歌曲列表
-        function initSongList() {
-            songs.forEach((song, index) => {
-                const songItem = document.createElement('div');
-                songItem.className = 'song-list-item';
-                if (index === currentSongIndex) songItem.classList.add('active');
-                songItem.textContent = song.title;
-                songItem.onclick = function() {
-                    selectSong(index);
-                };
-                songList.appendChild(songItem);
-            });
-        }
-        
-        // 设置音频事件监听
-        function setupAudioEvents() {
-            // 更新进度条和时间显示
-            audioPlayer.addEventListener('timeupdate', updateProgress);
-            
-            // 当音频元数据加载完成时更新总时长
-            audioPlayer.addEventListener('loadedmetadata', function() {
-                updateTotalTime();
-            });
-            
-            // 当音频结束时自动播放下一首
-            audioPlayer.addEventListener('ended', function() {
-                nextSong();
-            });
-        }
-        
-        // 更新进度条
-        function updateProgress() {
-            if (!isDraggingProgress) {
-                const currentTime = audioPlayer.currentTime;
-                const duration = audioPlayer.duration;
-                
-                if (duration > 0) {
-                    const progressPercent = (currentTime / duration) * 100;
-                    progressFill.style.width = progressPercent + '%';
-                    progressHandle.style.left = progressPercent + '%';
-                    
-                    // 更新时间显示
-                    updateTimeDisplay(currentTime, duration);
-                }
-            }
-        }
-        
-        // 更新时间显示
-        function updateTimeDisplay(currentTime, duration) {
-            currentTimeDisplay.textContent = formatTime(currentTime);
-            totalTimeDisplay.textContent = formatTime(duration);
-        }
-        
-        // 更新总时长
-        function updateTotalTime() {
-            const duration = audioPlayer.duration;
-            if (duration > 0) {
-                totalTimeDisplay.textContent = formatTime(duration);
-            }
-        }
-        
-        // 格式化时间 (秒 -> 分:秒)
-        function formatTime(seconds) {
-            const mins = Math.floor(seconds / 60);
-            const secs = Math.floor(seconds % 60);
-            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-        }
-        
-        // 设置进度条控制
-        function setupProgressControls() {
-            progressContainer.addEventListener('mousedown', startProgressDrag);
-            document.addEventListener('mousemove', dragProgress);
-            document.addEventListener('mouseup', stopProgressDrag);
-            
-            progressContainer.addEventListener('touchstart', startProgressDrag);
-            document.addEventListener('touchmove', dragProgress);
-            document.addEventListener('touchend', stopProgressDrag);
-        }
-        
-        // 开始拖动进度条
-        function startProgressDrag(e) {
-            isDraggingProgress = true;
-            updateProgressFromEvent(e);
-            e.preventDefault();
-        }
-        
-        // 拖动进度条
-        function dragProgress(e) {
-            if (!isDraggingProgress) return;
-            updateProgressFromEvent(e);
-            e.preventDefault();
-        }
-        
-        // 停止拖动进度条
-        function stopProgressDrag() {
-            isDraggingProgress = false;
-        }
-        
-        // 从事件更新进度
-        function updateProgressFromEvent(e) {
-            const rect = progressContainer.getBoundingClientRect();
-            let clientX;
-            
-            if (e.type.includes('mouse')) {
-                clientX = e.clientX;
-            } else if (e.touches) {
-                clientX = e.touches[0].clientX;
-            }
-            
-            if (clientX) {
-                let progressPercent = (clientX - rect.left) / rect.width;
-                progressPercent = Math.max(0, Math.min(1, progressPercent));
-                
-                const duration = audioPlayer.duration;
-                if (duration > 0) {
-                    audioPlayer.currentTime = progressPercent * duration;
-                    updateTimeDisplay(audioPlayer.currentTime, duration);
-                }
-                
-                progressFill.style.width = progressPercent * 100 + '%';
-                progressHandle.style.left = progressPercent * 100 + '%';
-            }
-        }
-        
-        // 切换歌曲列表显示
-        function toggleSongList() {
-            songList.classList.toggle('expanded');
-            expandBtn.classList.toggle('expanded');
-        }
-        
-        // 选择歌曲
-        function selectSong(index) {
-            currentSongIndex = index;
-            loadAndPlaySong();
-            
-            // 更新歌曲列表激活状态
-            document.querySelectorAll('.song-list-item').forEach((item, i) => {
-                if (i === index) {
-                    item.classList.add('active');
-                } else {
-                    item.classList.remove('active');
-                }
-            });
-        }
-        
-        // 设置导航栏拖动事件
-        function setupNavDrag() {
-            let isMouseDown = false;
-            
-            // 鼠标事件
-            navContainer.addEventListener('mousedown', dragStart);
-            navContainer.addEventListener('mousemove', drag);
-            navContainer.addEventListener('mouseup', dragEnd);
-            navContainer.addEventListener('mouseleave', dragEnd);
-            
-            // 触摸事件
-            navContainer.addEventListener('touchstart', dragStart);
-            navContainer.addEventListener('touchmove', drag);
-            navContainer.addEventListener('touchend', dragEnd);
-            
-            // 防止图片拖动
-            navContainer.addEventListener('dragstart', (e) => {
-                e.preventDefault();
-            });
-        }
-        
-        // 开始拖动
-        function dragStart(event) {
-            if (event.type === 'touchstart') {
-                startX = event.touches[0].clientX;
-            } else {
-                startX = event.clientX;
-                event.preventDefault();
-            }
-            
-            isDraggingNav = true;
-            navContainer.style.cursor = 'grabbing';
-            navContainer.style.transition = 'none';
-            
-            // 取消动画
-            cancelAnimationFrame(animationID);
-        }
-        
-        // 拖动中
-        function drag(event) {
-            if (!isDraggingNav) return;
-            
-            let currentX = 0;
-            if (event.type === 'touchmove') {
-                currentX = event.touches[0].clientX;
-            } else {
-                currentX = event.clientX;
-            }
-            
-            const diffX = currentX - startX;
-            currentTranslate = prevTranslate + diffX;
-            
-            // 限制滑动范围
-            const maxTranslate = 0;
-            const minTranslate = -((navItems.length - 1) * (180 + 15));
-            
-            if (currentTranslate > maxTranslate) {
-                currentTranslate = maxTranslate;
-            } else if (currentTranslate < minTranslate) {
-                currentTranslate = minTranslate;
-            }
-            
-            setSliderPosition();
-        }
-        
-        // 结束拖动
-        function dragEnd() {
-            if (!isDraggingNav) return;
-            
-            isDraggingNav = false;
-            navContainer.style.cursor = 'grab';
-            navContainer.style.transition = 'transform 0.3s ease';
-            
-            // 计算最近的页面
-            const movedBy = currentTranslate - prevTranslate;
-            
-            if (Math.abs(movedBy) > 50) { // 最小滑动距离
-                if (movedBy < 0 && currentNavIndex < navItems.length - 1) {
-                    currentNavIndex += 1;
-                } else if (movedBy > 0 && currentNavIndex > 0) {
-                    currentNavIndex -= 1;
-                }
-            }
-            
-            // 更新位置
-            prevTranslate = -currentNavIndex * (180 + 15);
-            currentTranslate = prevTranslate;
-            setSliderPosition();
-            
-            // 更新指示器
-            updateNavIndicator();
-        }
-        
-        // 设置滑块位置
-        function setSliderPosition() {
-            navSlider.style.transform = `translateX(${currentTranslate}px)`;
-        }
-        
-        // 更新导航指示器
-        function updateNavIndicator() {
-            const dots = document.querySelectorAll('.indicator-dot');
-            dots.forEach((dot, index) => {
-                if (index === currentNavIndex) {
-                    dot.classList.add('active');
-                } else {
-                    dot.classList.remove('active');
-                }
-            });
-        }
-        
-        // 跳转到指定导航页
-        function goToNavSlide(index) {
-            currentNavIndex = index;
-            prevTranslate = -currentNavIndex * (180 + 15);
-            currentTranslate = prevTranslate;
-            
-            navContainer.style.transition = 'transform 0.3s ease';
-            setSliderPosition();
-            updateNavIndicator();
-        }
-        
-        // 执行导航动作
-        function executeNavAction(action) {
-            switch(action) {
-                case 'openBackgroundSelector':
-                    openBackgroundSelector();
-                    break;
-                case 'showIceIsland':
-                    alert('冰岛科技 - 专注于前沿科技研发');
-                    break;
-                case 'showGreenning':
-                    alert('greenning - 致力于环保与可持续发展');
-                    break;
-                case 'showXiaoLing':
-                    alert('小凌 - 创意设计与用户体验专家');
-                    break;
-            }
-        }
-        
-        // 更新导航状态
-        function updateNavState() {
-            const translateX = -currentNavIndex * (180 + 15);
-            navSlider.style.transform = `translateX(${translateX}px)`;
-            
-            // 更新指示点
-            updateNavIndicator();
-        }
-        
-        // 初始化背景选择器
-        function initBackgroundSelector() {
-            backgrounds.forEach(bg => {
-                const bgOption = document.createElement('div');
-                bgOption.className = 'background-option';
-                bgOption.dataset.id = bg.id;
-                bgOption.dataset.class = bg.class;
-                
-                // 设置背景预览
-                bgOption.style.background = getComputedStyle(document.body).getPropertyValue('background');
-                
-                // 添加背景名称
-                const bgName = document.createElement('div');
-                bgName.className = 'background-name';
-                bgName.textContent = bg.name;
-                bgOption.appendChild(bgName);
-                
-                // 添加点击事件
-                bgOption.addEventListener('click', () => {
-                    selectBackground(bg.id);
-                });
-                
-                backgroundGrid.appendChild(bgOption);
-            });
-        }
-        
-        // 选择背景
-        function selectBackground(id) {
-            const bg = backgrounds.find(b => b.id === id);
-            if (!bg) return;
-            
-            // 移除所有背景类
-            document.body.className = '';
-            
-            // 添加选中的背景类
-            document.body.classList.add(bg.class);
-            
-            // 更新背景选项的激活状态
-            document.querySelectorAll('.background-option').forEach(option => {
-                if (parseInt(option.dataset.id) === id) {
-                    option.classList.add('active');
-                } else {
-                    option.classList.remove('active');
-                }
-            });
-            
-            // 保存到本地存储
-            localStorage.setItem('ly-background', id);
-            
-            // 添加动态效果
-            document.body.style.opacity = '0.8';
-            setTimeout(() => {
-                document.body.style.opacity = '1';
-            }, 300);
-        }
-        
-        // 加载保存的背景
-        function loadSavedBackground() {
-            const savedBg = localStorage.getItem('ly-background');
-            if (savedBg) {
-                selectBackground(parseInt(savedBg));
-            }
-        }
-        
-        // 打开背景选择器
-        function openBackgroundSelector() {
-            backgroundSelector.style.display = 'flex';
-            
-            // 添加动态效果
-            backgroundSelector.style.opacity = '0';
-            setTimeout(() => {
-                backgroundSelector.style.opacity = '1';
-            }, 10);
-        }
-        
-        // 关闭背景选择器
-        function closeBackgroundSelector() {
-            backgroundSelector.style.opacity = '0';
-            setTimeout(() => {
-                backgroundSelector.style.display = 'none';
-            }, 300);
-        }
-        
-        // 设置音量控制
-        function setupVolumeControls() {
-            volumeContainer.addEventListener('mousedown', startDrag);
-            document.addEventListener('mousemove', drag);
-            document.addEventListener('mouseup', stopDrag);
-            
-            volumeContainer.addEventListener('touchstart', startDrag);
-            document.addEventListener('touchmove', drag);
-            document.addEventListener('touchend', stopDrag);
-        }
-        
-        // 开始拖动
-        function startDrag(e) {
-            isDragging = true;
-            updateVolumeFromEvent(e);
-            e.preventDefault();
-        }
-        
-        // 拖动中
-        function drag(e) {
-            if (!isDragging) return;
-            updateVolumeFromEvent(e);
-            e.preventDefault();
-        }
-        
-        // 停止拖动
-        function stopDrag() {
-            isDragging = false;
-        }
-        
-        // 从事件更新音量
-        function updateVolumeFromEvent(e) {
-            const rect = volumeContainer.getBoundingClientRect();
-            let clientX;
-            
-            if (e.type.includes('mouse')) {
-                clientX = e.clientX;
-            } else if (e.touches) {
-                clientX = e.touches[0].clientX;
-            }
-            
-            if (clientX) {
-                let newVolume = (clientX - rect.left) / rect.width;
-                newVolume = Math.max(0, Math.min(1, newVolume));
-                
-                volume = newVolume;
-                audioPlayer.volume = volume;
-                updateVolumeUI(volume);
-            }
-        }
-        
-        // 更新音量UI
-        function updateVolumeUI(volume) {
-            const percent = volume * 100;
-            volumeFill.style.width = percent + '%';
-            volumeHandle.style.left = percent + '%';
-        }
-        
-        // 播放/暂停切换
-        function togglePlay() {
-            if (audioPlayer.paused) {
-                audioPlayer.play();
-            } else {
-                audioPlayer.pause();
-            }
-            updatePlayIcon();
-        }
-        
-        // 更新播放图标
-        function updatePlayIcon() {
-            playIcon.className = audioPlayer.paused ? 'fas fa-play' : 'fas fa-pause';
-        }
-        
-        // 切换下一首
-        function nextSong() {
-            currentSongIndex = (currentSongIndex + 1) % songs.length;
-            loadAndPlaySong();
-        }
-        
-        // 切换上一首
-        function previousSong() {
-            currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
-            loadAndPlaySong();
-        }
-        
-        // 加载并播放歌曲
-        function loadAndPlaySong() {
-            const song = songs[currentSongIndex];
-            audioPlayer.src = song.src;
-            songInfo.textContent = '正在播放: ' + song.title;
-            audioPlayer.play();
-            updatePlayIcon();
-            
-            // 更新歌曲列表激活状态
-            document.querySelectorAll('.song-list-item').forEach((item, i) => {
-                if (i === currentSongIndex) {
-                    item.classList.add('active');
-                } else {
-                    item.classList.remove('active');
-                }
-            });
-            
-            // 重置进度条
-            progressFill.style.width = '0%';
-            progressHandle.style.left = '0%';
-            currentTimeDisplay.textContent = '0:00';
-        }
-        
-        // 切换音乐播放器显示/隐藏
-        function toggleMusicPlayer() {
-            if (musicPlayer.classList.contains('hidden')) {
-                musicPlayer.classList.remove('hidden');
-                miniPlayer.classList.remove('visible');
-            } else {
-                musicPlayer.classList.add('hidden');
-                miniPlayer.classList.add('visible');
-            }
-        }
-        
-        // 显示模态框
-        function showModal(modalId) {
-            const modal = document.getElementById(modalId + 'Modal');
-            if (modal) {
-                modal.style.display = 'flex';
-                setTimeout(() => {
-                    modal.style.opacity = '1';
-                }, 10);
-            }
-        }
-        
-        // 关闭模态框
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId + 'Modal');
-            if (modal) {
-                modal.style.opacity = '0';
-                setTimeout(() => {
-                    modal.style.display = 'none';
-                }, 300);
-            }
-        }
-        
-        // 加入团队 - 直接跳转到Telegram
-        function joinTeam() {
-            window.open('https://t.me/LYwdnb66', '_blank');
-        }
-        
-        // 页面加载完成后初始化
-        window.addEventListener('DOMContentLoaded', init);
+        });
     </script>
 </body>
 </html>
