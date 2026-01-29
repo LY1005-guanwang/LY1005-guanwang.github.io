@@ -3,352 +3,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LY加速器 - 公益端</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+    <title>无忧易售 - 定价计算器</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563eb',
+                        secondary: '#3b82f6',
+                        dark: '#0f172a',
+                        dark-light: '#1e293b',
+                        glass: 'rgba(30, 41, 59, 0.6)',
+                        gray-c: '#94a3b8'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'SF Pro Display', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
         }
-        
-        body {
-            background: linear-gradient(135deg, #0c0c1d 0%, #1a1a2e 50%, #16213e 100%);
-            color: #e0e0e0;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        .container {
-            width: 100%;
-            max-width: 420px;
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(100, 200, 255, 0.1);
-            position: relative;
-        }
-        
-        .container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #3b82f6, transparent);
-        }
-        
-        .header {
-            padding: 20px;
-            text-align: center;
-            background: rgba(30, 41, 59, 0.7);
-            border-bottom: 1px solid rgba(100, 200, 255, 0.1);
-        }
-        
-        .status-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            font-size: 0.9rem;
-            color: #60a5fa;
-        }
-        
-        .channel {
-            background: rgba(59, 130, 246, 0.2);
-            padding: 5px 12px;
-            border-radius: 20px;
-            border: 1px solid rgba(59, 130, 246, 0.3);
-        }
-        
-        .logo-area {
-            margin: 15px 0;
-        }
-        
-        .logo {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto;
-            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 2rem;
-            font-weight: bold;
-            color: white;
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
-            position: relative;
-        }
-        
-        .logo::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.7; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        
-        .title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin: 10px 0 5px;
-            background: linear-gradient(90deg, #60a5fa, #3b82f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .subtitle {
-            font-size: 1rem;
-            color: #94a3b8;
-            margin-bottom: 10px;
-        }
-        
-        .stats {
-            display: flex;
-            justify-content: space-between;
-            padding: 20px;
-            gap: 15px;
-        }
-        
-        .stat-card {
-            flex: 1;
-            background: rgba(30, 41, 59, 0.6);
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-            border: 1px solid rgba(100, 200, 255, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        
-        .stat-title {
-            font-size: 0.9rem;
-            color: #94a3b8;
-            margin-bottom: 8px;
-        }
-        
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #60a5fa;
-        }
-        
-        .delay-value {
-            animation: pulse 2s infinite;
-        }
-        
-        .features {
-            padding: 0 20px;
-        }
-        
-        .section-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin: 15px 0;
-            color: #e2e8f0;
-            display: flex;
-            align-items: center;
-        }
-        
-        .section-title::before {
-            content: '';
-            display: inline-block;
-            width: 4px;
-            height: 16px;
-            background: #3b82f6;
-            margin-right: 8px;
-            border-radius: 2px;
-        }
-        
-        .feature-list {
-            list-style: none;
-            margin-bottom: 20px;
-        }
-        
-        .feature-item {
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-            font-size: 0.95rem;
-        }
-        
-        .feature-item::before {
-            content: '✓';
-            color: #10b981;
-            font-weight: bold;
-            margin-right: 10px;
-            font-size: 1.1rem;
-        }
-        
-        .action-buttons {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .btn {
-            padding: 14px;
-            border: none;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(90deg, #f59e0b, #d97706);
-            color: white;
-            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(245, 158, 11, 0.4);
-        }
-        
-        .rules {
-            background: rgba(30, 41, 59, 0.6);
-            border-radius: 12px;
-            padding: 15px;
-            margin: 0 20px 20px;
-            border: 1px solid rgba(100, 200, 255, 0.1);
-        }
-        
-        .rule-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            font-size: 0.9rem;
-            color: #cbd5e1;
-        }
-        
-        .rule-item::before {
-            content: '△';
-            color: #f59e0b;
-            margin-right: 10px;
-            font-size: 1.1rem;
-        }
-        
-        .footer {
-            text-align: center;
-            padding: 15px;
-            font-size: 0.8rem;
-            color: #64748b;
-            border-top: 1px solid rgba(100, 200, 255, 0.1);
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            /* 核心高级样式 */
+            .glass-card {
+                background: rgba(30, 41, 59, 0.7);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                border: 1px solid rgba(148, 163, 184, 0.1);
+                box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+            }
+            .input-style {
+                @apply w-full bg-dark-light border border-gray-700/50 rounded-lg py-3.5 px-4 text-gray-100 placeholder:text-gray-c/50 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all duration-300;
+            }
+            .btn-primary {
+                @apply w-full bg-gradient-to-r from-primary to-secondary text-white font-medium py-3.5 px-6 rounded-lg shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-1 active:translate-y-0 transition-all duration-300 flex items-center justify-center gap-2;
+            }
+            .stat-card {
+                @apply bg-dark-light rounded-lg p-5 border border-gray-700/30 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300;
+            }
+            .title-icon {
+                @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+            }
+            .section-title {
+                @apply flex items-center gap-2 text-lg font-semibold text-gray-100 mb-5;
+            }
+            .label-text {
+                @apply block text-gray-c text-sm mb-2 ml-0.5;
+            }
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <div class="header">
-            <div class="status-bar">
-                <div class="status">LY加速器已连接</div>
-                <div class="channel">频道 @LYwdnb66</div>
+<!-- 背景渐变+全屏布局 -->
+<body class="font-sans bg-gradient-to-br from-dark to-dark-light min-h-screen flex items-center justify-center p-4 md:p-8 text-gray-100">
+    <!-- 主容器-居中限制宽度 -->
+    <div class="w-full max-w-2xl mx-auto">
+        <!-- 顶部标题区 -->
+        <div class="text-center mb-10">
+            <h1 class="text-[clamp(2rem,5vw,3rem)] font-bold mb-3">
+                <i class="fa fa-calculator title-icon"></i>
+                无忧易售<span class="title-icon">定价计算器</span>
+            </h1>
+            <p class="text-gray-c/80 text-base md:text-lg">人民币定价 · 成本精准核算 · 一键填上品价</p>
+            <!-- 装饰分割线 -->
+            <div class="w-32 h-1 bg-gradient-to-r from-primary to-secondary rounded-full mx-auto mt-6"></div>
+        </div>
+
+        <!-- 核心计算器-玻璃拟态卡片 -->
+        <div class="glass-card rounded-2xl p-6 md:p-8">
+            <!-- 计算表单 -->
+            <form id="priceForm" class="space-y-8">
+                <!-- 基础成本区 -->
+                <div class="pb-7 border-b border-gray-700/30">
+                    <h2 class="section-title">
+                        <i class="fa fa-shopping-bag text-primary"></i>基础成本（人民币）
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+                        <div>
+                            <label class="label-text" for="purchaseCost">采购成本（含内包/加工）</label>
+                            <input type="number" id="purchaseCost" step="0.01" min="0" placeholder="例：119.00" class="input-style">
+                        </div>
+                        <div>
+                            <label class="label-text" for="logisticsCost">国际物流成本</label>
+                            <input type="number" id="logisticsCost" step="0.01" min="0" placeholder="例：100.00" class="input-style">
+                        </div>
+                        <div>
+                            <label class="label-text" for="domesticFee">国内杂费（打包/快递/仓储）</label>
+                            <input type="number" id="domesticFee" step="0.01" min="0" placeholder="例：5.00" value="0" class="input-style">
+                        </div>
+                        <div>
+                            <label class="label-text" for="otherCost">其他成本（可选）</label>
+                            <input type="number" id="otherCost" step="0.01" min="0" placeholder="例：0.00" value="0" class="input-style">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 费率&利润设置区 -->
+                <div class="pb-7 border-b border-gray-700/30">
+                    <h2 class="section-title">
+                        <i class="fa fa-cog text-primary"></i>费率&利润设置
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+                        <div>
+                            <label class="label-text" for="platformRate">平台佣金比例（%）</label>
+                            <input type="number" id="platformRate" step="0.1" min="0" placeholder="例：10.0" value="10" class="input-style">
+                        </div>
+                        <div>
+                            <label class="label-text" for="cashRate">提现手续费比例（%）</label>
+                            <input type="number" id="cashRate" step="0.1" min="0" placeholder="例：2.0" value="2" class="input-style">
+                        </div>
+                        <div>
+                            <label class="label-text" for="targetProfit">目标利润（元）</label>
+                            <input type="number" id="targetProfit" step="0.01" min="0" placeholder="例：50.00" value="50" class="input-style">
+                        </div>
+                        <div>
+                            <label class="label-text" for="exchangeRate">人民币兑卢布（参考）</label>
+                            <input type="number" id="exchangeRate" step="0.01" min="0" placeholder="例：12.00" value="12" class="input-style">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 计算按钮 -->
+                <div class="pt-2">
+                    <button type="submit" class="btn-primary">
+                        <i class="fa fa-calculator fa-lg"></i>
+                        一键计算 · 生成上品价
+                    </button>
+                </div>
+            </form>
+
+            <!-- 结果展示区-默认隐藏 -->
+            <div id="resultArea" class="mt-8 hidden">
+                <div class="bg-dark/60 rounded-xl p-1 border border-gray-700/40">
+                    <h2 class="section-title p-0 mx-4 mt-2">
+                        <i class="fa fa-line-chart text-primary"></i>定价结果 <span class="text-xs font-normal text-gray-c/70">（直接填入无忧易售）</span>
+                    </h2>
+                    <!-- 结果统计卡片-网格 -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+                        <div class="stat-card">
+                            <p class="text-gray-c text-sm mb-2">总成本</p>
+                            <p id="totalCostCny" class="text-2xl md:text-3xl font-bold">¥0.00</p>
+                        </div>
+                        <div class="stat-card">
+                            <p class="text-gray-c text-sm mb-2">人民币保本售价</p>
+                            <p id="breakEvenCny" class="text-2xl md:text-3xl font-bold text-primary">¥0.00</p>
+                        </div>
+                        <div class="stat-card border-l-4 border-primary">
+                            <p class="text-gray-c text-sm mb-2">✅ 最终上品售价（人民币）</p>
+                            <p id="finalPriceCny" class="text-2xl md:text-3xl font-bold">¥0.00</p>
+                        </div>
+                        <div class="stat-card">
+                            <p class="text-gray-c text-sm mb-2">参考售价（卢布）</p>
+                            <p id="finalPriceRub" class="text-2xl md:text-3xl font-bold text-secondary">₽0.00</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="logo-area">
-                <div class="logo">LY</div>
-            </div>
-            <h1 class="title">LY 公益端</h1>
-            <p class="subtitle">LY工作室为你保驾护航</p>
         </div>
-        
-        <div class="stats">
-            <div class="stat-card">
-                <div class="stat-title">服务器延迟</div>
-                <div class="stat-value delay-value">28 ms</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-title">当前时间</div>
-                <div class="stat-value" id="current-time">20:48:45</div>
-            </div>
-        </div>
-        
-        <div class="features">
-            <h2 class="section-title">核心功能</h2>
-            <ul class="feature-list">
-                <li class="feature-item">安卓连打规则连接成功</li>
-                <li class="feature-item">防掉框防3方无异常优化网络</li>
-                <li class="feature-item">使用说明：全程端口启动游戏前执行</li>
-                <li class="feature-item">sh清理925</li>
-            </ul>
-        </div>
-        
-        <div class="action-buttons">
-            <button class="btn btn-primary">官方频道 @LYwdnb66</button>
-        </div>
-        
-        <div class="rules">
-            <div class="rule-item">内核已是无敌路，不演后果你自负</div>
-            <div class="rule-item">支持上分支持明演</div>
-        </div>
-        
-        <div class="footer">
-            LY加速器 © 2023 - 安全稳定的游戏体验
+
+        <!-- 底部备注 -->
+        <div class="text-center mt-8 text-gray-c/60 text-sm">
+            <p>适配Ozon/Wildberries | 数据仅供参考，可按市场行情微调</p>
+            <p class="mt-1">© 无忧易售上品工具 | 精准核算 · 高效定价</p>
         </div>
     </div>
 
+    <!-- 核心计算脚本 -->
     <script>
-        // 更新当前时间
-        function updateTime() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('zh-CN', { 
-                hour12: false,
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
+        document.getElementById('priceForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // 获取输入值
+            const purchaseCost = parseFloat(document.getElementById('purchaseCost').value) || 0;
+            const logisticsCost = parseFloat(document.getElementById('logisticsCost').value) || 0;
+            const domesticFee = parseFloat(document.getElementById('domesticFee').value) || 0;
+            const otherCost = parseFloat(document.getElementById('otherCost').value) || 0;
+            const platformRate = parseFloat(document.getElementById('platformRate').value) / 100 || 0;
+            const cashRate = parseFloat(document.getElementById('cashRate').value) / 100 || 0;
+            const targetProfit = parseFloat(document.getElementById('targetProfit').value) || 0;
+            const exchangeRate = parseFloat(document.getElementById('exchangeRate').value) || 0;
+
+            // 核心计算逻辑
+            const totalCost = purchaseCost + logisticsCost + domesticFee + otherCost;
+            const totalRate = 1 - platformRate - cashRate;
+            const breakEvenCny = totalCost / totalRate;
+            const finalPriceCny = (totalCost + targetProfit) / totalRate;
+            const finalPriceRub = (finalPriceCny * exchangeRate).toFixed(0);
+
+            // 赋值展示结果
+            document.getElementById('totalCostCny').textContent = `¥${totalCost.toFixed(2)}`;
+            document.getElementById('breakEvenCny').textContent = `¥${breakEvenCny.toFixed(2)}`;
+            document.getElementById('finalPriceCny').textContent = `¥${finalPriceCny.toFixed(2)}`;
+            document.getElementById('finalPriceRub').textContent = `₽${finalPriceRub}`;
+            
+            // 显示结果区+平滑滚动
+            document.getElementById('resultArea').classList.remove('hidden');
+            document.getElementById('resultArea').scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest'
             });
-            document.getElementById('current-time').textContent = timeString;
-        }
-        
-        // 随机生成服务器延迟（15-50之间）
-        function updateDelay() {
-            const delay = Math.floor(Math.random() * 36) + 15; // 15-50之间的随机数
-            document.querySelector('.delay-value').textContent = delay + ' ms';
-        }
-        
-        // 初始化
-        updateTime();
-        updateDelay();
-        
-        // 每秒更新时间
-        setInterval(updateTime, 1000);
-        
-        // 每5秒更新延迟（模拟真实变化）
-        setInterval(updateDelay, 5000);
-        
-        // 添加点击按钮的交互效果
-        document.querySelector('.btn-primary').addEventListener('click', function() {
-            this.textContent = '正在跳转...';
-            setTimeout(() => {
-                this.textContent = '官方频道 @LYwdnb66';
-                alert('已复制频道信息到剪贴板');
-            }, 1000);
+
+            // 结果区轻微动效
+            document.getElementById('resultArea').style.animation = 'fadeIn 0.6s ease-in-out';
         });
+
+        // 添加入场渐入动画
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
